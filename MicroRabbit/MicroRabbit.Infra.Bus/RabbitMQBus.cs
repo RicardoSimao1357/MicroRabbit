@@ -2,7 +2,6 @@
 using MicroRabbit.Domain.Core.Bus;
 using MicroRabbit.Domain.Core.Commands;
 using MicroRabbit.Domain.Core.Events;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -72,7 +71,7 @@ namespace MicroRabbit.Infra.Bus
 
         private async Task StartBasicConsume<T>() where T : Event
         {
-            var factory = new ConnectionFactory() { HostName = "localhost"};
+            var factory = new ConnectionFactory() { HostName = "localhost" };
 
             var connection = await factory.CreateConnectionAsync();
             var channel = await connection.CreateChannelAsync();
@@ -84,7 +83,7 @@ namespace MicroRabbit.Infra.Bus
             var consumer = new AsyncEventingBasicConsumer(channel);
             consumer.ReceivedAsync += Consumer_Received;
 
-            await channel.BasicConsumeAsync(eventName,false, consumer: consumer);
+            await channel.BasicConsumeAsync(eventName, false, consumer: consumer);
 
         }
 
